@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
       libcupsimage2:i386 \
       libcups2:i386 \
       libc6:i386 \
+      python3-lxml \
     && rm -rf /var/lib/apt/lists/*
 
 # Build and install brlaser from source
