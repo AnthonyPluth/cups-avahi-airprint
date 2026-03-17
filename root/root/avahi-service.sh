@@ -74,24 +74,24 @@ wait_for_network() {
 # Function to start avahi-daemon
 start_avahi() {
     echo "Starting avahi-daemon..."
-    # Clean up any existing processes first
     cleanup_avahi
 
-    # Wait for network to be ready
     if ! wait_for_network; then
         echo "Network not ready after 30 seconds, starting anyway..."
     fi
 
-    # Run in foreground to capture logs in container logs
-    # Removed -D flag to prevent daemonizing, ensuring logs go to stdout/stderr
-    # Adding debug flag for more verbose logging
-    echo "Starting avahi-daemon in foreground mode..."
-    exec avahi-daemon --no-drop-root --no-chroot --no-proc-title --debug
+    echo "Starting avahi-daemon in daemon mode..."
+    avahi-daemon --no-drop-root --daemonize
 
-    # Note: The exec command replaces the current process with avahi-daemon
-    # This function will not return unless there's an error starting avahi-daemon
-    echo "Failed to start avahi-daemon"
-    return 1
+    # Wait and check if it started successfully
+    sleep 2
+    if [ -f /var/run/avahi-daemon/pid ]; then
+        echo "avahi-daemon started successfully with PID $(cat /var/run/avahi-daemon/pid)"
+        return 0
+    else
+        echo "avahi-daemon failed to start"
+        return 1
+    fi
 }
 
 # Main service loop
