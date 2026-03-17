@@ -5,11 +5,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386
 
 # Add OpenPrinting PPA for newer CUPS
-RUN apt-get update && \
-    apt-get install -y curl gnupg ca-certificates && \
-    echo "deb http://ppa.launchpad.net/openprinting/stable/ubuntu jammy main" > /etc/apt/sources.list.d/openprinting.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 && \
-    apt-get update
+RUN wget -O cups.tar.gz https://github.com/OpenPrinting/cups/releases/download/v2.4.11/cups-2.4.11-source.tar.gz && \
+    tar xzf cups.tar.gz && \
+    cd cups-2.4.11 && \
+    ./configure \
+      --with-components=all \
+      --enable-libpaper \
+      --disable-systemd && \
+    make -j$(nproc) && \
+    make install && \
+    cd .. && \
+    rm -rf cups-2.4.11 cups.tar.gz
 
 # Now update and install everything in one shot
 RUN apt-get update && apt-get install -y \
@@ -46,6 +52,10 @@ RUN apt-get update && apt-get install -y \
       libcups2:i386 \
       libc6:i386 \
       python3-lxml \
+      libpaper-dev \
+      libavahi-client-dev \
+      libgnutls28-dev \
+      libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Build and install brlaser from source
