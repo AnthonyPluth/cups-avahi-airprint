@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y \
       automake \
       libtool \
       libreadline-dev \
+      libstdc++6:i386 \
       libcupsimage2-dev \
       libcupsimage2:i386 \
       libcups2:i386 \
