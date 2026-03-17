@@ -84,6 +84,6 @@ VOLUME /config
 VOLUME /services
 
 ADD root /
-RUN chmod +x /root/root/*
+RUN chmod +x /root/*
 
-CMD ["/root/root/run_cups.sh"]
+CMD ["/root/run_cups.sh"]
