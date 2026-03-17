@@ -5,7 +5,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386
 
 # Add OpenPrinting PPA for newer CUPS
-RUN apt-get update && apt-get install -y software-properties-common && \
+RUN apt-get update && \
+    apt-get install -y \
+      software-properties-common \
+      gnupg \
+      ca-certificates && \
     add-apt-repository ppa:openprinting/stable && \
     apt-get update
 
