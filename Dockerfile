@@ -25,8 +25,14 @@ RUN apt-get update && apt-get install -y \
       git \
       cmake \
       unzip \
-      libcups2:i386 \
+      pkg-config \
+      autoconf \
+      automake \
+      libtool \
+      libreadline-dev \
+      libcupsimage2-dev \
       libcupsimage2:i386 \
+      libcups2:i386 \
       libc6:i386 \
     && rm -rf /var/lib/apt/lists/*
 
