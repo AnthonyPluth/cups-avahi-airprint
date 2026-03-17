@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
       cmake \
       unzip \
       pkg-config \
+      iproute2 \
       autoconf \
       automake \
       libtool \
