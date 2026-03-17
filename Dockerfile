@@ -6,11 +6,9 @@ RUN dpkg --add-architecture i386
 
 # Add OpenPrinting PPA for newer CUPS
 RUN apt-get update && \
-    apt-get install -y \
-      software-properties-common \
-      gnupg \
-      ca-certificates && \
-    add-apt-repository ppa:openprinting/stable && \
+    apt-get install -y curl gnupg ca-certificates && \
+    echo "deb http://ppa.launchpad.net/openprinting/stable/ubuntu jammy main" > /etc/apt/sources.list.d/openprinting.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 && \
     apt-get update
 
 # Now update and install everything in one shot
