@@ -62,8 +62,15 @@ RUN wget -O gutenprint-5.3.5.tar.xz https://sourceforge.net/projects/gimp-print/
 RUN wget -O /tmp/xerox-phaser-6000-6010.zip \
       "https://web.archive.org/web/20220705230937if_/https://download.support.xerox.com/pub/drivers/6000/drivers/linux/en_GB/6000_6010_deb_1.01_20110210.zip" && \
     unzip /tmp/xerox-phaser-6000-6010.zip -d /tmp/xerox && \
-    dpkg -i /tmp/xerox/xerox-phaser-6000-6010_1.0-1_i386.deb || apt-get install -f -y && \
-    rm -rf /tmp/xerox /tmp/xerox-phaser-6000-6010.zip
+    cd /tmp/xerox && \
+    ar x xerox-phaser-6000-6010_1.0-1_i386.deb && \
+    mkdir -p /usr/lib/cups/filter \
+             /usr/share/cups/Xerox/dlut \
+             /usr/share/ppd/Xerox \
+             /usr/share/doc/xerox-phaser-6000-6010 && \
+    tar xzf data.tar.gz -C / && \
+    chmod 755 /usr/lib/cups/filter/xrhkaz* && \
+    cd / && rm -rf /tmp/xerox /tmp/xerox-phaser-6000-6010.zip
 
 # Baked-in config file changes
 RUN sed -i 's/Listen localhost:631/Listen 0.0.0.0:631/' /etc/cups/cupsd.conf && \
