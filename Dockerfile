@@ -3,6 +3,10 @@ FROM ubuntu:22.04
 # Must register i386 BEFORE the first apt-get update
 RUN dpkg --add-architecture i386
 
+RUN apt-get update && apt-get install -y software-properties-common && \
+    add-apt-repository ppa:openprinting/stable && \
+    apt-get update
+
 # Now update and install everything in one shot
 RUN apt-get update && apt-get install -y \
       cups \
