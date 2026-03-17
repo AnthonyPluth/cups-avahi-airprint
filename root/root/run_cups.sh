@@ -66,6 +66,13 @@ AVAHI_SERVICE_PID=$!
 
 sleep 2
 
+# Debug avahi startup
+echo "Testing avahi startup directly..."
+avahi-daemon --no-drop-root --daemonize
+echo "Direct avahi exit code: $?"
+sleep 2
+ps aux | grep avahi
+
 # Start CUPS and printer update
 /root/root/printer-update.sh &
 exec /usr/sbin/cupsd -f
