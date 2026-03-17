@@ -4,19 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Must register i386 BEFORE the first apt-get update
 RUN dpkg --add-architecture i386
 
-# Add OpenPrinting PPA for newer CUPS
-RUN wget -O cups.tar.gz https://github.com/OpenPrinting/cups/releases/download/v2.4.11/cups-2.4.11-source.tar.gz && \
-    tar xzf cups.tar.gz && \
-    cd cups-2.4.11 && \
-    ./configure \
-      --with-components=all \
-      --enable-libpaper \
-      --disable-systemd && \
-    make -j$(nproc) && \
-    make install && \
-    cd .. && \
-    rm -rf cups-2.4.11 cups.tar.gz
-
 # Now update and install everything in one shot
 RUN apt-get update && apt-get install -y \
       cups \
@@ -57,6 +44,19 @@ RUN apt-get update && apt-get install -y \
       libgnutls28-dev \
       libssl-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Add OpenPrinting PPA for newer CUPS
+RUN wget -O cups.tar.gz https://github.com/OpenPrinting/cups/releases/download/v2.4.11/cups-2.4.11-source.tar.gz && \
+    tar xzf cups.tar.gz && \
+    cd cups-2.4.11 && \
+    ./configure \
+      --with-components=all \
+      --enable-libpaper \
+      --disable-systemd && \
+    make -j$(nproc) && \
+    make install && \
+    cd .. && \
+    rm -rf cups-2.4.11 cups.tar.gz
 
 # Build and install brlaser from source
 RUN git clone https://github.com/pdewacht/brlaser.git && \
