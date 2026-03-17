@@ -245,19 +245,19 @@ class AirPrintGenerate(object):
                 if self.directory:
                     fname = os.path.join(self.directory, fname)
 
-				if etree:
-				    f = open(fname, 'wb')
-				    tree.write(f, pretty_print=True, xml_declaration=True, encoding="UTF-8")
-				else:
-				    f = open(fname, 'w')
-				    xmlstr = tostring(tree.getroot())
-				    doc = parseString(xmlstr)
-				    dt= minidom.getDOMImplementation('').createDocumentType('service-group', None, 'avahi-service.dtd')
-				    doc.insertBefore(dt, doc.documentElement)
-				    doc.writexml(f)
-				f.close()
+                if etree:
+                    f = open(fname, 'wb')
+                    tree.write(f, pretty_print=True, xml_declaration=True, encoding="UTF-8")
+                else:
+                    f = open(fname, 'w')
+                    xmlstr = tostring(tree.getroot())
+                    doc = parseString(xmlstr)
+                    dt= minidom.getDOMImplementation('').createDocumentType('service-group', None, 'avahi-service.dtd')
+                    doc.insertBefore(dt, doc.documentElement)
+                    doc.writexml(f)
+                f.close()
 
-				if self.verbose:
+                if self.verbose:
                     sys.stderr.write('Created: %s%s' % (fname, os.linesep))
 
 if __name__ == '__main__':
