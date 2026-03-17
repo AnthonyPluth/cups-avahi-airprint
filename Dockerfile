@@ -1,8 +1,10 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Must register i386 BEFORE the first apt-get update
 RUN dpkg --add-architecture i386
 
+# Add OpenPrinting PPA for newer CUPS
 RUN apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:openprinting/stable && \
     apt-get update
