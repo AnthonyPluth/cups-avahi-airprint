@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
       ghostscript \
       hplip \
       avahi-daemon \
+      qpdf \
       inotify-tools \
       python3 \
       python3-dev \
