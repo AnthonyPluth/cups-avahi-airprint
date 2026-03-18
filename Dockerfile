@@ -50,6 +50,7 @@ RUN wget -O cups.tar.gz https://github.com/OpenPrinting/cups/releases/download/v
     tar xzf cups.tar.gz && \
     cd cups-2.4.11 && \
     ./configure \
+      --prefix=/usr \
       --with-components=all \
       --enable-libpaper \
       --disable-systemd && \
