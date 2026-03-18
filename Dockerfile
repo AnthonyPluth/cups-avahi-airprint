@@ -54,6 +54,7 @@ RUN wget https://github.com/OpenPrinting/cups/releases/download/v2.4.16/cups-2.4
     ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var && \
     make -j$(nproc) && \
     make install && \
+    ldconfig && \
     cd .. && \
     rm -rf cups-2.4.16 cups-2.4.16-source.tar.gz
 
